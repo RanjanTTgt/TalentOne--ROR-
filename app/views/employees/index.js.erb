@@ -1,0 +1,2 @@
+$('#loader-body').fadeOut();
+$("#employee-table-data").html("<%= j render(partial: "employees/employees", locals: { users: @users, pagy: @pagy}) %>");

@@ -1,0 +1,36 @@
+<div id="user-attendance-<%= user_id %>" class="card_box <%= attendance&.time_in ? "" : "time_in" %>">
+  <% unless attendance&.time_in.present? %>
+    <div class="mb-2">
+      <button data-action="click->attendance#timeIn" class="btn btn-primary">
+        Time In
+      </button>
+    </div>
+  <% else %>
+    <% if attendance.time_out.present? %>
+      <div class="mb-2">
+      <span class="countdown text-bold">
+        <span class="font-weight-bolder" id="timer_id">
+          Today's Total Working Hours: <%= attendance.working_time %>
+        </span>
+      </span>
+      </div>
+    <% else %>
+      <div class="mb-4">
+        <span class="countdown"><span class="h1 font-weight-bold">Time in at <%= attendance.time_in.strftime("%l:%M %P") %></span></span>
+      </div>
+      <div class="countdown text-bold mb-4"
+           data-controller="attendance"
+           data-attendance-from-value="<%= attendance.time_in.utc.iso8601 %>">
+        <div class="font-weight-bolder" id="timer_id">
+          Timing:
+          <time data-attendance-target="timer">00:00:00</time>
+        </div>
+      </div>
+      <div>
+        <button data-action="click->attendance#timeOut" class="btn btn-primary" style="width: 100%; display: block;">
+          Time Out
+        </button>
+      </div>
+    <% end %>
+  <% end %>
+</div>

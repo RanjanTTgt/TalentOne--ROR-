@@ -1,0 +1,45 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7 secLeft">
+          <!-- <h6 class="h2 text-white d-inline-block mb-0">Attendance</h6> -->
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <%= link_to("/") do %>
+                  <i class="fas fa-home"></i>
+                <% end %>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Employees</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right formResponsive userFOrm">
+          <form id="searchForm" method="get" action="javascript:void(0);" role="search">
+            <div class="input-group custom-searchfeild">
+
+              <input type="hidden" name="action" value="/users">
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card minHeight">
+        <!-- Card header -->
+        <div class="card-header border-0 d-flex align-items-center justify-content-between">
+          <h3 class="mb-0">Employees</h3>
+        </div>
+        <div id="employee-table-data">
+          <%= render partial: "employees/employees", locals: { users: @users, pagy: @pagy} %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

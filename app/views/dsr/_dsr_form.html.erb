@@ -1,0 +1,91 @@
+<div class="table input-lists">
+  <% status_report = DailyStatus.new %>
+  <% status_report.daily_status_reports.build %>
+  <% status_report.documents.build %>
+  <%= form_for status_report, as: :dsr, url: { controller: request[:controller], action: :create_dsr }, method: :post do |f| %>
+    <template data-dsr-target='new_project_task'>
+      <%= f.fields_for :daily_status_reports, child_index: 'NEW_PROJECT_TASK' do |daily_status_report| %>
+        <%= render partial: 'dsr/report_detail_fields', locals: { daily_status_report: daily_status_report, f: f, is_new: false, add_sub: true, assigned_projects: @assigned_projects, project_id: daily_status_report.object.project_id } %>
+      <% end %>
+    </template>
+
+    <template data-dsr-target='new_task'>
+      <%= f.fields_for :daily_status_reports, child_index: 'NEW_TASK' do |daily_status_report| %>
+        <%= render partial: 'dsr/report_detail_fields', locals: { daily_status_report: daily_status_report, f: f, is_new: false, add_sub: false, assigned_projects: @assigned_projects, project_id: daily_status_report.object.project_id } %>
+      <% end %>
+    </template>
+
+    <template data-dsr-target='newDocument'>
+      <%= f.fields_for :documents, child_index: 'NEW_DSR_DOCUMENT' do |p| %>
+        <div id="remove-document-div">
+          <%= p.file_field :file, multiple: false, accept: '.jpg, .jpeg, .png, .doc, .docx, .pdf, .xlsx, .csv' %>
+          <span class="remove-document-button">
+              <%= link_to("javascript:void(0)", class: "btn btn-danger btn-md document-btn", data: { action: "click->dsr#removeDocument" }) do %>
+                Remove Attachment
+              <% end %>
+            </span>
+        </div>
+      <% end %>
+    </template>
+
+  <% end %>
+  <%= form_for @dsr, as: :dsr, url: { controller: request[:controller], action: :create_dsr }, method: :post do |f| %>
+    <%= f.fields_for :daily_status_reports do |daily_status_report| %>
+      <%= render partial: 'dsr/report_detail_fields', locals: { daily_status_report: daily_status_report, f: f, is_new: true, add_sub: true, assigned_projects: @assigned_projects, project_id: daily_status_report.object.project_id } %>
+    <% end %>
+
+    <small data-dsr-target="add_item"></small>
+
+    <br/>
+    <div>
+      <div id="add-document-div">
+        <label><b>Attachments: </b></label>
+        <small>
+          <%= link_to("javascript:void(0)", class: "btn btn-primary btn-md document-btn", data: { action: "click->dsr#addDocument" }) do %>
+            Add Attachment
+          <% end %>
+        </small>
+      </div>
+      <%= f.fields_for :documents do |p| %>
+        <div id="remove-document-div">
+          <%= p.file_field :file, multiple: false, accept: '.jpg, .jpeg, .png, .doc, .docx, .pdf, .xlsx, .csv' %>
+          <span class="remove-document-button">
+            <%= link_to("javascript:void(0)", class: "btn btn-danger btn-md document-btn", data: { action: "click->dsr#removeDocument" }) do %>
+              Remove Attachment
+            <% end %>
+          </span>
+        </div>
+      <% end %>
+      <small data-dsr-target="documentList"></small>
+      <br>
+      <small><b>*Note:</b> Only .jpg, .jpeg, .png, .doc, .docx, .pdf, .xlsx and .csv formats are allowed.</small>
+    </div>
+
+
+    <br>
+    <div id="send_to">
+      <label><b>Send To:</b></label> &nbsp
+      <% to_ids = f.object.to_ids rescue [] %>
+      <% User.manager.or(User.super_admin).order(:first_name).each do |user| %>
+        <% next if current_user.id == user.id %>
+        <%= f.check_box :to_ids, { multiple: true, disabled: !!user.super_admin? }, user.id, (user.super_admin? || to_ids.include?(user.id)) %>
+        <%= user.full_name %>
+      <% end %>
+    </div>
+    <br>
+    <div class="button-group ">
+      <% cc_ids = f.object.cc_ids rescue [] %>
+      <label><b>Add Cc:</b></label> &nbsp
+      <% User.hr.or(User.employee).order(:first_name).each do |user| %>
+        <% next if current_user.id == user.id %>
+        <%= f.check_box :cc_ids, { multiple: true, disabled: !!user.super_admin? }, user.id, (user.super_admin? || cc_ids.include?(user.id)) %>
+        <%= user.full_name %>
+      <% end %>
+    </div>
+    <br/>
+    <div class="subbtn">
+      <%= f.submit "Submit DSR", class: "btn btn-primary  pull-center", data: { action: "click->dsr#validate" } %>
+    </div>
+
+  <% end %>
+</div>

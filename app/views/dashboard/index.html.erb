@@ -1,0 +1,156 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-6">
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <%= link_to('/dashboard') do %>
+                  <i class="fas fa-home"></i>
+                <% end %>
+              </li>
+              <li class="breadcrumb-item">Dashboard</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-6 cardTime" >
+          <div data-controller="attendance"
+               data-attendance-display-class="time_in"
+               data-attendance-target="attendance">
+              <%= turbo_stream_from "user-attendance-#{current_user.id}" %>
+              <%= render partial: "attendance/attendance", locals: { attendance: @attendance, user_id: current_user.id } %>
+            </div>
+        </div>
+      </div>
+      <!-- Card stats -->
+      <div class="row">
+
+        <div class="col-xl-4 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Total Assigned Projects</h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= @total_assigned_projects %>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                    <i class="ni ni-active-40"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Total DSR sent</h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= @total_dsr_send %>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-inbox-out"></i>
+                  <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                    <i class="fa fa-inbox-out" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+          <div class="card card-stats">
+            <!-- Card body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Total DSR received</h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    <%= @total_dsr_received %>
+                  </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                    <i class="ni ni-money-coins"></i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card card-stats">
+            <!-- &lt;!&ndash; Card body &ndash;&gt; -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Quote of the day</h5>
+                  <span class="h2 font-weight-bold font-italic mb-0">
+                    The best way to predict the future is to create it.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt--6 ">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card minHeightDash">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="h3 mb-0">Upcoming Birthday</h5>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead>
+                <tr>
+                  <th>Sr No</th>
+                  <th>Employee Name</th>
+                  <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @upcoming_birthdays.each_with_index { |user, index | %>
+                  <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= user.full_name %></td>
+                    <td><%= user.dob.strftime("%d %B") %></td>
+                  </tr>
+                <% } %>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

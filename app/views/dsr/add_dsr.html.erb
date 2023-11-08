@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://weareoutman.github.io/clockpicker/dist/jquery-clockpicker.min.css">
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <!-- <h6 class="h2 text-white d-inline-block mb-0">Attendance</h6> -->
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <%= link_to("/") do %>
+                  <i class="fas fa-home"></i>
+                <% end %>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">DSR</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid dsr-detail-pg mt--6" data-controller="dsr">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center border-0">
+          <h3 class="mb-0">Add DSR</h3>
+        </div>
+        <div class="card-body">
+          <div class="canvas-wrapper">
+            <div class="table-responsive dsr-form">
+              <%= render partial: "dsr/dsr_form", locals: { dsr: @dsr } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="swal-overlay swal-overlay--show-modal"
+       data-dsr-target="swalModal"
+       tabindex="-1" style="display: none">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+      <div class="swal-text" data-dsr-target="swalText">Data</div>
+      <div class="swal-footer">
+        <div class="swal-button-container">
+          <button class="swal-button swal-button--confirm" data-action="click->dsr#hideSwalModal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

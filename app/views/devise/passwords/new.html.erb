@@ -1,0 +1,28 @@
+<div class="card-header">
+  <h2>Forgot password?</h2>
+  <% flash.each do |key, value| %>
+    <%= content_tag :p, value, class: "flash #{key === 'alert' ? 'text-danger' : 'text-success' }" %>
+  <% end %>
+</div>
+
+<div class="card-body login-screen">
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="form-group mb-3">
+      <%= f.label :email %><br/>
+      <%= f.email_field :email, autofocus: true, class: "form-control", autocomplete: "email" %>
+    </div>
+
+
+    <div class="text-center">
+      <%= f.submit "Send me reset password instructions", class: "btn btn-primary my-4" %>
+    </div>
+
+    <div class="forgotPass">
+      <%= render "devise/shared/links" %>
+    </div>
+
+<% end %>
+</div>

@@ -1,0 +1,12 @@
+<tr id="user-attendance-record-<%= attendance.encrypted_id %>">
+  <td><%= attendance.user.full_name || "-" %></td>
+  <td><%= attendance.time_in&.strftime('%d-%m-%Y %I:%M %p') || "-" %></td>
+  <td><%= attendance.time_out&.strftime('%d-%m-%Y %I:%M %p') || "-" %></td>
+  <td><%= attendance.working_time %></td>
+  <td>
+      <span class="badge badge-dot mr-4">
+          <i class="bg-<%= attendance.is_absent? ? 'danger' : 'success' %>"></i>
+          <span class="status"><%= attendance.status_name %></span>
+      </span>
+  </td>
+</tr>

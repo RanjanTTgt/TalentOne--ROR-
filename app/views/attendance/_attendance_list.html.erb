@@ -1,0 +1,26 @@
+<table class="table align-items-center table-flush">
+  <thead class="thead-light">
+  <th scope="col" class="sort" data-sort="budget">Date</th>
+  <th scope="col">Time In</th>
+  <th scope="col">Time Out</th>
+  <th scope="col">Total Working Time</th>
+  <th scope="col">Status</th>
+  </thead>
+  <tbody class="list">
+
+  <% attendance_reports.each do |attendance| %>
+    <tr>
+      <td><%= attendance.date&.strftime('%d-%m-%Y') || "-" %></td>
+      <td><%= attendance.time_in&.strftime('%d-%m-%Y %I:%M %p') || "-" %></td>
+      <td><%= attendance.time_out&.strftime('%d-%m-%Y %I:%M %p') || "-" %></td>
+      <td><%= attendance.working_time %></td>
+      <td>
+      <span class="badge badge-dot mr-4">
+          <i class="bg-<%= attendance.is_absent? ? 'danger' : 'success' %>"></i>
+          <span class="status"><%= attendance.status_name %></span>
+      </span>
+      </td>
+    </tr>
+  <% end if attendance_reports.present? %>
+  </tbody>
+</table>

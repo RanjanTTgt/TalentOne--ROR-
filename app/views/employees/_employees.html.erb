@@ -1,0 +1,32 @@
+<div class="table-responsive" id="dynamicContent">
+  <table class="table align-items-center table-flush">
+    <thead class="thead-light">
+    <tr>
+      <th>S.No</th>
+      <th>Employee Name</th>
+      <th>Email</th>
+      <th>DOB</th>
+      <th>Department</th>
+      <th>Designation</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% users.each_with_index { |user, index | %>
+      <tr>
+        <td class="row_counter"><%= index + 1 + ((pagy.page - 1) * pagy.items) %></td>
+        <td><%= user.full_name || "-" %></td>
+        <td><div class=""><%= user.email || "-" %></div></td>
+        <td><%= user.dob&.strftime("%d-%b-%Y") || "-" %></td>
+        <td><%= user.department&.name || "-" %></td>
+        <td><%= user.designation&.name || "-" %></td>
+      </tr>
+    <% } %>
+
+    </tbody>
+  </table>
+
+  <%= raw pagy_nav(pagy) if pagy.pages > 1 %>
+
+
+</div>

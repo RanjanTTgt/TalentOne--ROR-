@@ -1,0 +1,2 @@
+$('#loader-body').fadeOut();
+$("#dsr-receive-table-div").html("<%= j render(partial: "dsr/dsr", locals: { dsrs: @dsrs, pagy: @pagy, dsr: @dsr, current_user: current_user}) %>");

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TalentOne</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= favicon_link_tag("favico.ico") %>
+
+  <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+        integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+  <%= javascript_include_tag 'src/jquery.min', 'src/js_cookie', 'src/argon', 'src/moment.min',
+                             'src/daterangepicker.min', 'src/clockpicker.min' %>
+
+</head>
+
+<body id="body_tag">
+<div id="loader-body" style="display: none;">
+  <div id="loader">
+    <%= image_tag("loader.gif", alt: "loader image") %>
+  </div>
+</div>
+<%= hidden_field_tag("current_user", current_user&.encrypted_id, id: "current-user-id") %>
+  <%= render 'layouts/shared/sidebar' %>
+  <main class="main-content position-relative border-radius-lg ">
+    <div class="dashboard-layout">
+      <%= render 'layouts/shared/navbar' %>
+      <div id="main-layout">
+        <%= yield %>
+      </div>
+    </div>
+    <%= render 'layouts/shared/footer' %>
+  </main>
+<script>
+    $(document).ready(function () {
+
+        $('.close_sidebar').on("click", function () {
+            $('#body_tag').removeClass('nav-open g-sidenav-show g-sidenav-pinned');
+            $('#body_tag').addClass('g-sidenav-hidden');
+        });
+
+        $('.sidenav-toggler').on("click", function () {
+            $('#body_tag').addClass('nav-open g-sidenav-show g-sidenav-pinned');
+            $('#body_tag').removeClass('g-sidenav-hidden');
+        });
+
+    });
+</script>
+</body>
+</html>

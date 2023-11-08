@@ -1,0 +1,46 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <%= link_to("/") do %>
+                  <i class="fas fa-home"></i>
+                <% end %>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">DSR</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid dsr-detail-pg mt--6" data-controller="dsr">
+  <div class="row" id="dsr_list_view">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center border-0">
+          <h3 class="mb-0">DSR List</h3>
+          <span class="w-75">
+            <input placeholder="Search by description and project name"
+                   type="text"
+                   id="searchDsr"
+                   name="search_dsr"
+                   class="form-control" />
+          </span>
+        </div>
+        <div id="dsr-table-div">
+          <%= render partial: "dsr/dsr_list", locals: { dsrs: dsrs, pagy: pagy, current_user: current_user} %>
+        </div>
+      </div>
+    </div>
+    <div class="col-6"  id="dsr_detail_view" data-dsr-target="detail_view">
+      <%= render partial: "dsr/dsr_detail", locals: { dsr: dsr, current_user: current_user} %>
+    </div>
+  </div>
+  <div id="dsr-comments"></div>
+</div>

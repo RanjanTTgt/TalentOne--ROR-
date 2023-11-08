@@ -1,0 +1,32 @@
+<% if node.present? %>
+  <% if node.nodes.count > 0 %>
+    <li class="nav-item submenu<%= (controller_name.eql?(node.controller)) ? ' active' : '' %>">
+      <a href="javascript:void(0)" class="nav-link submenu-toggle">
+        <i class="sidenav-icon <%= node['icon'] if node['icon'].present? %>"></i>
+        <span><%= node['name'].html_safe %></span>
+        <i class="fas fa-caret-right ml-auto fa-caret-down"></i>
+      </a>
+      <ul>
+        <% node.nodes.order("position ASC").each do |child_node| %>
+          <%= render partial: "layouts/shared/side_menu", locals: { node: child_node, sub_node: true } %>
+        <% end %>
+      </ul>
+    </li>
+  <% else %>
+    <% if sub_node %>
+      <li class="<%= (controller_name.eql?(node.controller) && action_name.eql?(node.action)) ? ' sub-active' : '' %>">
+        <%= link_to url_for(controller: "#{node.controller}", action: "#{node.action}"), data: {action: "click->node#startLoader"} do %>
+          <i class="<%= node.icon if node.icon.present? %>"></i>
+          <span class="nav-link-text"><%= node.name.html_safe %></span>
+        <% end %>
+      </li>
+    <% else %>
+      <li class="nav-item<%= (controller_name.eql?(node.controller) && action_name.eql?(node.action)) ? ' active' : '' %>">
+        <%= link_to url_for(controller: "#{node.controller}", action: "#{node.action}"), class: "nav-link", data: {action: "click->node#startLoader"} do %>
+          <i class="<%= node.icon if node.icon.present? %>"></i>
+          <span class="nav-link-text"><%= node.name.html_safe %></span>
+        <% end %>
+      </li>
+    <% end %>
+  <% end %>
+<% end %>

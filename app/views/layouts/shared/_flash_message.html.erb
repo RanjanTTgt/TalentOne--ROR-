@@ -1,0 +1,18 @@
+<div id="flash-message" data-controller="flash" data-flash-target="message">
+  <% if type == 'success' %>
+    <div class="alert alert-success ajax-success-alert" style="display: block">
+      <a href="javascript:void(0)" class="close ml-4" data-action="click->flash#remove">&times;</a>
+      <span class="ajax-success-alert-message"><%= message %></span>
+    </div>
+  <% elsif type == 'error' %>
+    <div class="alert alert-danger ajax-danger-alert" style="display: block">
+      <a href="javascript:void(0)" class="close ml-4" data-action="click->flash#remove">&times;</a>
+      <span class="ajax-danger-alert-message"><%= message %></span>
+    </div>
+  <% elsif type == 'warning' %>
+    <div class="alert alert-warning ajax-warning-alert" style="display: block">
+      <a href="javascript:void(0)" class="close ml-4" data-action="click->flash#remove">&times;</a>
+      <span class="ajax-warning-alert-message"><%= message %></span>
+    </div>
+  <% end %>
+</div>

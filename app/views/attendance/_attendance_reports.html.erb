@@ -1,0 +1,6 @@
+<%= render partial: "attendance/attendance_list", locals: { attendance_reports: attendance_reports} %>
+<div class="card-footer py-4">
+  <div class="common pagination" data-controller="attendance">
+    <%= raw pagy_nav(pagy) if pagy.pages > 1 %>
+  </div>
+</div>

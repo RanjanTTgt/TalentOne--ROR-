@@ -1,0 +1,57 @@
+<%#= turbo_stream_from dom_id(current_user, :broadcast_to) %>
+<div id="comments-modal" class="modal show" role="dialog" style="display: block">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Comments</h3>
+        <button type="button" class="close" data-action="click->dsr#closeModal">&times;</button>
+      </div>
+
+      <div class="modal-body" id="dsr-comments-body-<%= dsr.id %>-<%= dsr.user_id %>">
+        <%= turbo_stream_from dsr %>
+          <% if dsr.comments.present? %>
+            <% users_data = {} %>
+            <% users_data[current_user.id] = current_user.full_name %>
+            <% dsr.comments.map do |comment| %>
+                <% unless users_data[comment.user_id] %>
+                  <% users_data[comment.user_id] = comment.user&.full_name || "N-A" %>
+                <% end %>
+                <div id="comment-dsr-<%= comment.encrypted_id %>" class="<%= comment.user_id === current_user.id ? "text-right receiver" : "text-left sender" %> mb-2">
+                  <h5><b><%= users_data[comment.user_id] %></b></h5>
+                  <p style="margin-bottom: 0px">
+                    <%= comment.comment %>
+                  </p>
+                  <p>
+                    <small>
+                      <i>
+                        <% created_at = comment.created_at %>
+                        <% date = created_at.to_formatted_s(:long_ordinal).split(",").first %>
+                        <%= created_at.strftime("#{date} %Y, %l:%M pm") %>
+                      </i>
+                    </small></p>
+                </div>
+            <% end %>
+          <div id="dsr-new-comments-<%= dsr.encrypted_id %>-<%= dsr.user_id %>">
+          </div>
+          <% else %>
+          <div id="dsr-new-comments-<%= dsr.encrypted_id %>-<%= dsr.user_id %>">
+            <h4 class="text-center">
+              There are no comments present for this DSR.
+            </h4>
+          </div>
+          <% end %>
+        </div>
+      <div class="modal-footer">
+        <div class="w-100">
+          <% comment = dsr.comments.new %>
+          <%= form_for(comment, as: :dsr_comment, url: { controller: request[:controller], action: :add_comment }, remote: true, method: :post, class: "w-100") do |f| %>
+            <%= f.text_area(:comment, placeholder: "Write a comment...", class: " form-control scroll", id: "dsr-comments-text-#{dsr.id}-#{dsr.user_id}") %>
+            <div class="text-right">
+              <%= f.submit(:submit, value: "Add", class: "btn btn-primary mt-3 add_comment") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

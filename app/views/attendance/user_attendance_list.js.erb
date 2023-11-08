@@ -1,0 +1,3 @@
+window.scrollTo(0,0);
+$('#loader-body').fadeOut();
+$("#attendance-table-data").html("<%= j render(partial: "attendance/attendance_reports", locals: { attendance_reports: @attendance_reports, pagy: @pagy}) %>");

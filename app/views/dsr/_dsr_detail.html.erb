@@ -1,0 +1,78 @@
+<% if dsr.present? %>
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center border-0">
+      <h3 class="mb-0">DSR Details</h3>
+    </div>
+    <div class="card-body">
+      <div class="canvas-wrapper dsr-details-content">
+        <% project_hash = {} %>
+        <% project_hash[""] = "N-A" %>
+        <% last_project_id = 0, index_value = 0 %>
+        <% total_time = 0 %>
+        <% dsr.daily_status_reports.each do |report_detail| %>
+          <% total_time += report_detail.time_difference %>
+          <% project_id = report_detail.project_id.to_s %>
+          <% unless project_hash[project_id].present? %>
+            <% project_hash[project_id] = report_detail.project&.name || 'N-A' %>
+          <% end %>
+
+          <% if last_project_id != project_id %>
+            <div class="row">
+              <div class="col-12">
+                <h4 class="mb-3">Project: <%= project_hash[project_id] %></h4>
+              </div>
+            </div>
+            <% last_project_id = project_id %>
+            <% index_value = 0 %>
+          <% end %>
+          <div class="row mb-4 dsr-details-list">
+            <div class="col-xl-12">
+              <h5><%= index_value += 1 %>. <%= report_detail.task.to_s %></h5>
+              <div class="time_estimate">
+                <p class="m-0 text-left">
+                  <strong>Time: </strong>
+                  <%= report_detail.start_time&.strftime("%I:%M %p") %>
+                  - <%= report_detail.end_time&.strftime("%I:%M %p") %>
+                </p>
+                <p class="m-0 text-right">
+                  <strong>Time Estimate: </strong><%= report_detail.total_time %>
+                </p>
+              </div>
+              <pre class="m-0"><%= report_detail.description.to_s %></pre>
+            </div>
+          </div>
+        <% end %>
+        <div class="estimated-total--time"><strong>Total Time Estimate:</strong>  <%= get_total_time(total_time) %></div>
+        <b>Attachments: </b>
+        <% if dsr.documents.present? %>
+          <% dsr.documents.each do |attachment| %>
+            <br>
+            <%= link_to(attachment.file.file.original_filename, url_for(attachment.file_url), download: true) %>
+          <% end %>
+        <% else %>
+          N-A
+        <% end %>
+      </div>
+    </div>
+    <!-- Card footer -->
+    <div class="card-footer py-3 px-3">
+      <div class="row">
+        <div id="sent-details-data" class="col-sm-6" style="cursor: pointer" data-action="click->dsr#toggleDetail">
+          See Details
+          <div id="sent-details" style="display: none;" class="mt-2" data-dsr-target="send_detail">
+            <% if dsr.present? %>
+              <b>To: </b><%= User.where(id: dsr.to_ids).pluck(:email).join(", ") %>
+              <br>
+              <% if dsr.cc_ids.present? %>
+                <b>Cc: </b><%= User.where(id: dsr.cc_ids).pluck(:email).join(", ") %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <%= link_to(comments_dsr_path(dsr), class: "col-sm-6 text-right", remote: true, method: :post, style: "color: black") do %>
+          Add Comment
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

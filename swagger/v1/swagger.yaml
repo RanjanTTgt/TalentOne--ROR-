@@ -1,0 +1,334 @@
+openapi: 3.0.0
+info:
+  title: TalentOne API
+  version: V1
+paths:
+  /api/v1/sessions:
+    post:
+      tags:
+        - Authentication
+      description:
+        Login
+      summary: Login with Email and Password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ email, password ]
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "data": {
+                    "id": 15,
+                    "email": "test29@yopmail.com",
+                  },
+                  "meta": {
+                    "auth_token": "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTUyNzExNTIsInJvbGUiOiJVc2VyIiwidXNlcl9pZCI6MTV9.mx0_Q6-9CaWlx8RF9Fl0Np68wRzhKMnpOKHPHkAYUs8"
+                  },
+                  "message": "Successfully Logged In",
+                  "success": true
+                }
+    delete:
+      tags:
+        - Authentication
+      description:
+        Destroy current session
+      summary: Destroy current session
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Logged out successfully",
+                  "success": true
+                }
+  /api/v1/dashboard:
+    get:
+      tags:
+        - Dashboard
+      description:
+        Login
+      summary: Fetch dashboard data
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Data fetched successfully",
+                  "success": true
+                }
+  /api/v1/attendances:
+    get:
+      tags:
+        - Attendance
+      description:
+        Attendance List
+      parameters:
+        - name: start_date
+          in: query
+          description: Start Date of Filter
+          schema:
+            type: string
+        - name: end_date
+          in: query
+          description: End Date of Filter
+          schema:
+            type: string
+      summary: Fetch attendances list
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Data fetched successfully",
+                  "success": true
+                }
+  /api/v1/attendances/time_in:
+    post:
+      tags:
+        - Attendance
+      description:
+        Time In
+      summary: Time In
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Time in successfully",
+                  "success": true
+                }
+  /api/v1/attendances/time_out:
+    post:
+      tags:
+        - Attendance
+      description:
+        Time Out
+      summary: Time Out
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Time out successfully",
+                  "success": true
+                }
+  /api/v1/daily_status/send_list:
+    get:
+      tags:
+        - Daily Status
+      parameters:
+        - name: page
+          in: query
+          description: Page Number
+          schema:
+            type: number
+      description:
+        Send Daily Status List
+      summary: Send Daily Status List
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Send Daily Status fetched successfully",
+                  "success": true
+                }
+  /api/v1/daily_status/received_list:
+    get:
+      tags:
+        - Daily Status
+      parameters:
+        - name: page
+          in: query
+          description: Page Number
+          schema:
+            type: number
+      description:
+        Received Daily Status List
+      summary: Received Daily Status List
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Received Daily Status fetched successfully",
+                  "success": true
+                }
+  /api/v1/daily_status/{id}/fetch_send:
+    get:
+      tags:
+        - Daily Status
+      parameters:
+        - name: id
+          in: path
+          description: Id of Daily Status
+          schema:
+            type: number
+      description:
+        Daily Status Detail
+      summary: Daily Status Detail
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Daily Status detail fetched successfully",
+                  "success": true
+                }
+  /api/v1/daily_status/{id}/fetch_received:
+    get:
+      tags:
+        - Daily Status
+      parameters:
+        - name: id
+          in: path
+          description: Id of Daily Status
+          schema:
+            type: number
+      description:
+        Daily Status Detail
+      summary: Daily Status Detail
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Daily Status detail fetched successfully",
+                  "success": true
+                }
+  /api/v1/weekly_status/send_list:
+    get:
+      tags:
+        - Weekly Status
+      parameters:
+        - name: page
+          in: query
+          description: Page Number
+          schema:
+            type: number
+      description:
+        Send Weekly Status List
+      summary: Send Weekly Status List
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Send Weekly Status fetched successfully",
+                  "success": true
+                }
+  /api/v1/weekly_status/received_list:
+    get:
+      tags:
+        - Weekly Status
+      parameters:
+        - name: page
+          in: query
+          description: Page Number
+          schema:
+            type: number
+      description:
+        Received Weekly Status List
+      summary: Received Weekly Status List
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Received Weekly Status fetched successfully",
+                  "success": true
+                }
+  /api/v1/weekly_status/{id}/fetch_send:
+    get:
+      tags:
+        - Weekly Status
+      parameters:
+        - name: id
+          in: path
+          description: Id of Weekly Weekly Status
+          schema:
+            type: number
+      description:
+        Daily Status Detail
+      summary: Daily Status Detail
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Weekly Weekly Status detail fetched successfully",
+                  "success": true
+                }
+  /api/v1/weekly_status/{id}/fetch_received:
+    get:
+      tags:
+        - Weekly Status
+      parameters:
+        - name: id
+          in: path
+          description: Id of Weekly Weekly Status
+          schema:
+            type: number
+      description:
+        Daily Status Detail
+      summary: Daily Status Detail
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {
+                  "message": "Weekly Weekly Status detail fetched successfully",
+                  "success": true
+                }

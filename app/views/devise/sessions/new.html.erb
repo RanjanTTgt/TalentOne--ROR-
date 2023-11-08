@@ -1,0 +1,38 @@
+<div class="card-header">
+  <h5> Login to your account</h5>
+  <p>Enter your email address and password to access the panel.</p>
+
+  <% flash.each do |key, value| %>
+    <%= content_tag :p, value, class: "flash #{key === 'alert' ? 'text-danger' : 'text-success' }" %>
+  <% end %>
+
+</div>
+<div class="card-body login-screen">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+    <div class="form-group mb-3">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "form-control success", autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: "form-control", autocomplete: "current-password" %>
+    </div>
+
+
+    <% if devise_mapping.rememberable? %>
+      <div class="form-check form-switch">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+    <div class="text-right forgotPass">
+      <%= render "devise/shared/links" %>
+    </div>
+
+    <div class="text-center">
+      <%= f.button "Sign In", class: "btn btn-primary my-4", type: "submit" %>
+    </div>
+  <% end %>
+</div>

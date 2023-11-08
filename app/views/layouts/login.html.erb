@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="zybUvqZDF7t5FESPtcOsEZTv6MvpETMQeqyjYQ3j">
+  <link rel="icon" href="https://talentone.teamtalentelgia.com/images/t.jpg"/>
+  <title>TalentOne</title>
+
+  <!-- Styles -->
+  <link href="https://talentone.teamtalentelgia.com/css/app.css" rel="stylesheet">
+  <link href="https://talentone.teamtalentelgia.com/css/slidebar.css" rel="stylesheet">
+  <link href="https://talentone.teamtalentelgia.com/css/datepicker/datepicker.css" rel="stylesheet">
+  <link href="https://talentone.teamtalentelgia.com/css/jquery-ui.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://talentone.teamtalentelgia.com/css/styles.css">
+  <link rel="stylesheet" href="https://talentone.teamtalentelgia.com/css/bootstrap-select.css">
+  <link rel="stylesheet" href="https://talentone.teamtalentelgia.com/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="https://talentone.teamtalentelgia.com/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="https://talentone.teamtalentelgia.com/css/argon.css?v=1.2.0 " type="text/css">
+
+  <link rel="stylesheet" href="https://talentone.teamtalentelgia.com/css/loader.css" type="text/css">
+  <style>
+      a:hover {
+          color: #05b1c5;
+      }
+      a{
+          text-decoration: none !important;
+      }
+  </style>
+</head>
+
+<body class="login-body-class">
+
+<div id="loader-body">
+  <div id="loader"></div>
+</div>
+
+
+
+<div class="login_signup main-site">
+  <main class="site-body">
+    <section class="left-section">
+      <div class="bg-image">
+      </div>
+    </section>
+    <section class="right-section">
+      <div class="main-logo">
+        <a class="navbar-brand" href="https://talentone.teamtalentelgia.com">
+          <img src="https://talentone.teamtalentelgia.com/images/tt-one.svg">
+        </a>
+      </div>
+      <div class="container no-gutter">
+        <div class="row justify-content-center">
+          <div class="col-xl-7 col-lg-9 col-md-12 col-sm-12">
+            <div class="card login-signup-card">
+              <div class="card-header">
+                <h5> Login to your account</h5>
+                <p>Enter your email address and password to access the panel.</p>
+              </div>
+              <div class="card-body">
+                <form role="form" method="POST" action="https://talentone.teamtalentelgia.com/login" id="login_form">
+                  <input type="hidden" name="_token" value="zybUvqZDF7t5FESPtcOsEZTv6MvpETMQeqyjYQ3j">
+                  <div class="form-group mb-3">
+                    <label for="">Email</label>
+                    <input class="form-control" placeholder="E-mail" name="email" type="email" value="" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Password</label>
+                    <input class="form-control" placeholder="Password" name="password" type="password" value="" autocomplete="off">
+                  </div>
+                  <div class="text-right forgotPass">
+                    <a href="https://talentone.teamtalentelgia.com/password/reset" title="Forgot Password">
+                      <span>Forgot Password ?</span>
+                    </a>
+                  </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary my-4">Sign in</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+</section>
+</main>
+</div>
+
+<!--Script-->
+
+<script src="https://talentone.teamtalentelgia.com/js/app.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/sidebar.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/jquery.min.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/jquery.toaster.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/bootstrap-select.min.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/plugin/jquery.validate/jquery.validate.min.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/plugin/jquery.validate/additional-methods.min.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/common.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/formValidate.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/jquery-ui.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/bootstrap-datepicker.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/moment.min.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/bootstrap.bundle.min.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/js.cookie.js"></script>
+<script src="https://talentone.teamtalentelgia.com/js/argon.js?v=1.2.0"></script>
+
+<script src="https://talentone.teamtalentelgia.com/js/custom_new.js"></script>
+<script>
+    $.toaster({ settings : {timeout:4000} });
+</script>
+
+<script type="text/javascript">
+
+    var roleId = 0,
+        prefix = roleId == 1 ? 'admin/' : (roleId == 2 ? 'management/' : (roleId == 3 ? 'pm/' : ''));
+
+    $(document).ready(function(){
+        $('.alert-success').fadeOut(8000);
+        $('.alert-danger').fadeOut(8000);
+    });
+</script>
+<script>
+    var ADMIN_URL = 'https://talentone.teamtalentelgia.com/admin';
+    var EMP_URL = 'https://talentone.teamtalentelgia.com';
+    var TOKEN = 'zybUvqZDF7t5FESPtcOsEZTv6MvpETMQeqyjYQ3j';
+    var PM_URL = 'https://talentone.teamtalentelgia.com/pm';
+    var BASE_URL = 'https://talentone.teamtalentelgia.com';
+    var HR_URL = 'https://talentone.teamtalentelgia.com/hr';
+</script>
+<script>
+    $("#login_form").validate({
+        validClass: "success",
+        errorElement: 'p',
+        rules: {
+            email: {
+                required: !0,
+                email: true,
+                validEmailCheck: true,
+                maxlength: 100,
+                normalizer: function(value) {
+                    return $.trim(value)
+                }
+            },
+            password : {
+                required: !0,
+            },
+        },
+        messages: {
+            email: {
+                required: 'The email field is required.'
+            },
+            password: {
+                required: 'The password field is required.'
+            },
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group').addClass('has-error');
+            // $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function(element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            // $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+        },
+        submitHandler: function(form){
+            // $('#loader-body').fadeIn();
+            form.submit();
+        }
+    });
+    // $('#loader-body').fadeIn();
+    setTimeout(function(){
+        $('.help-block').fadeOut();
+    },5000);
+</script>
+</body>
+</html>

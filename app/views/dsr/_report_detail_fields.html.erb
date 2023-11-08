@@ -1,0 +1,119 @@
+<% if add_sub %>
+  <div id="<%= project_id || 0 %>">
+    <table class="nested-dsr-fields" width="100%">
+      <thead width="100%">
+      <tr>
+        <td colspan="3">
+          <%= daily_status_report.select("project_id", options_for_select((assigned_projects.collect { |u| [u.name, u.id] }).concat([["Other", 0]]), (daily_status_report.object.project_id rescue nil)), { include_blank: "Select Project" }, { class: "form-control dsr select-project", required: true }) %>
+        </td>
+        <td width="10%">
+          <% if is_new %>
+            <small>
+              <%= link_to("javascript:void(0)", class: "btn btn-primary btn-md btn-circle add-rows", data: { action: "click->dsr#add_association", "item-id-param" => "12345" }) do %>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              <% end %>
+            </small>
+          <% elsif daily_status_report&.object&.id.nil? %>
+            <small>
+              <%= link_to("javascript:void(0)", class: "btn btn-danger btn-md delRow btn-circle", data: { action: "click->dsr#remove_association" }, :"data-item-id-param" => "12345") do %>
+                <i class="fa fa-times"></i>
+              <% end %>
+            </small>
+          <% end %>
+        </td>
+      </tr>
+      </thead>
+      <tbody id="nested-sub-fields" class="sub-table-body">
+      <tr id="tr-1">
+        <%= daily_status_report.hidden_field :_destroy %>
+      </tr>
+      <tr id="tr-2">
+        <td width="70%">
+            <%= daily_status_report.text_field :task, placeholder: "Task", class: "form-control dsr", required: true, data: { target: "dsr.task", action: "blur->dsr#validateValue" } %>
+            <span class="text-danger"></span>
+        </td>
+
+        <td width="10%">
+            <%= daily_status_report.text_field :start_time, value: "#{daily_status_report&.object&.start_time&.strftime("%H:%M") rescue ''}",
+                                         placeholder: "Start Time",
+                                         class: "form-control start_time timer timeEst timer",
+                                         required: true, readonly: true, data: { target: "dsr.startTime", action: "blur->dsr#validateValue" } %>
+            <span class="text-danger"></span>
+        </td>
+        <td width="10%">
+          <%= daily_status_report.text_field :end_time, value: "#{daily_status_report&.object&.end_time&.strftime("%H:%M") rescue ''}",
+                                       placeholder: "End Time",
+                                       class: "form-control end_time timer timeEst timer",
+                                       required: true, readonly: true, data: { target: "dsr.endTime", action: "blur->dsr#validateValue" } %>
+          <span class="text-danger"></span>
+        </td>
+
+        <td width="10%">
+          <% if add_sub %>
+            <%= link_to("javascript:void(0)", class: "btn btn-warning btn-sm btn-circle add-task", data: { action: "click->dsr#add_sub_association", "dsr-project-param" => project_id || 0 }) do %>
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            <% end %>
+          <% elsif daily_status_report&.object&.id.nil? %>
+            <%= link_to("javascript:void(0)", class: "btn btn-danger btn-sm btn-circle remove-task", data: { action: "click->dsr#remove_sub_association" }) do %>
+              <i class="fa fa-times" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr id="tr-3">
+        <td colspan="3">
+          <%= daily_status_report.text_area :description, placeholder: "Description", class: "form-control dsr dsr-area", required: true, data: { target: "dsr.description" , action: "blur->dsr#validateValue" } %>
+          <span class="text-danger"></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <tbody id="nested-sub-fields" class="sub-table-body">
+  <tr id="tr-1">
+    <%= daily_status_report.hidden_field :_destroy %>
+  </tr>
+  <tr id="tr-2">
+    <td width="70%">
+      <%= daily_status_report.text_field :task, placeholder: "Task", class: "form-control dsr", required: true, data: { target: "dsr.task" , action: "blur->dsr#validateValue" } %>
+      <span class="text-danger"></span>
+    </td>
+
+    <td width="10%">
+      <%= daily_status_report.text_field :start_time, value: "#{daily_status_report&.object&.start_time&.strftime("%H:%M") rescue ''}",
+                                   placeholder: "Start Time",
+                                   class: "form-control start_time timer timeEst timer",
+                                   required: true, readonly: true, data: { target: "dsr.startTime", action: "blur->dsr#validateValue" } %>
+      <span class="text-danger"></span>
+    </td>
+    <td width="10%">
+      <%= daily_status_report.text_field :end_time, value: "#{daily_status_report&.object&.end_time&.strftime("%H:%M") rescue ''}",
+                                   placeholder: "End Time",
+                                   class: "form-control end_time timer timeEst timer",
+                                   required: true, readonly: true, data: { target: "dsr.endTime", action: "blur->dsr#validateValue" } %>
+      <span class="text-danger"></span>
+    </td>
+
+    <td width="10%">
+      <% if add_sub %>
+        <%= link_to("javascript:void(0)", class: "btn btn-warning btn-sm btn-circle add-task", data: { action: "click->dsr#add_sub_association", "dsr-project-param" => project_id || 0 }) do %>
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        <% end %>
+      <% elsif daily_status_report&.object&.id.nil? %>
+        <%= link_to("javascript:void(0)", class: "btn btn-danger btn-sm btn-circle remove-task", data: { action: "click->dsr#remove_sub_association" }) do %>
+          <i class="fa fa-times" aria-hidden="true"></i>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr id="tr-3">
+    <td colspan="3">
+      <%= daily_status_report.text_area :description, placeholder: "Description", class: "form-control dsr dsr-area", required: true, data: { target: "dsr.description", action: "blur->dsr#validateValue" } %>
+      <span class="text-danger"></span>
+    </td>
+  </tr>
+  </tbody>
+<% end %>

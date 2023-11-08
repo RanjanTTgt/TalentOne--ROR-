@@ -1,0 +1,21 @@
+<div data-controller="dsrcomment"
+     data-dsrcomment-target="currentDiv">
+  <%= hidden_field_tag("user_id", current_user.encrypted_id, data: {target: "dsrcomment.userId"}) %>
+  <%= hidden_field_tag("comment_id", comment.id, data: {target: "dsrcomment.commentId"}) %>
+</div>
+
+<div id="comment-dsr-<%= comment.id %>" class="<%= comment.user_id === current_user.id ? "text-right receiver" : "text-left sender" %> mb-2" id="new-comment">
+  <h5><b><%= current_user.full_name %></b></h5>
+  <p style="margin-bottom:0px">
+    <%= comment.comment %>
+  </p>
+  <p>
+    <small>
+      <i>
+        <% created_at = comment.created_at %>
+        <% date = created_at.to_formatted_s(:long_ordinal).split(",").first %>
+        <%= created_at.strftime("#{date} %Y, %l:%M pm") %>
+      </i>
+    </small></p>
+</div>
+<div id="dsr-new-comments-<%= dsr.encrypted_id %>-<%= dsr.user_id %>"></div>

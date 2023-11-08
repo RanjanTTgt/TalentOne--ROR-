@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TalentOne</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= favicon_link_tag("favico.ico") %>
+  <%= javascript_importmap_tags %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+  <%= javascript_include_tag 'src/jquery.min',  'src/js_cookie', 'src/argon', 'src/moment.min',
+                             'src/daterangepicker.min', 'src/clockpicker.min' %>
+</head>
+
+<body>
+<div id="loader-body" style="display: none">
+  <div id="loader">
+      <%= image_tag("loader.gif", alt: "loader image") %>
+  </div>
+</div>
+
+<div class="login_signup main-site">
+  <main class="site-body">
+    <section class="left-section">
+      <div class="bg-image">
+      </div>
+    </section>
+    <section class="right-section">
+      <div class="main-logo">
+        <%= link_to("/", class: "navbar-brand") do %>
+          <%= image_tag("tt-one.svg", alt: "logo") %>
+        <% end %>
+      </div>
+      <div class="container no-gutter">
+        <div class="row justify-content-center">
+          <div class="col-xl-7 col-lg-9 col-md-12 col-sm-12">
+            <div class="card login-signup-card">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+</body>
+</html>

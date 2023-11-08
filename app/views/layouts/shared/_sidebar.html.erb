@@ -1,0 +1,23 @@
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <div class="scrollbar-inner">
+    <div class="sidenav-header  align-items-center">
+      <%= link_to("/", class: "navbar-brand") do %>
+        <%= image_tag("tt-one.svg", class: "navbar-brand-img", alt: "...") %>
+      <% end %>
+    </div>
+    <div>
+      <span class="close_sidebar"><i class="fa fa-times"></i></span>
+    </div>
+    <div class="navbar-inner">
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <ul class="navbar-nav" data-controller="node">
+          <% @nodes.each do |node| %>
+            <% if node.count > 0 %>
+              <%= render partial: "layouts/shared/side_menu", locals: {node: node, sub_node: false} %>
+            <% end %>
+          <% end if @nodes.present? %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

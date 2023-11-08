@@ -1,0 +1,59 @@
+<div class="card-body">
+  <div class="canvas-wrapper dsr-details-list">
+    <div class="table-responsive">
+      <div>
+        <%= image_tag("small_loader.gif", class: "loaderList",style: "display: none; margin-left: 35%; margin-right: 30%; width: 10%;" ) %>
+      </div>
+      <table class="table ">
+        <tbody id="dsr_tbody">
+        <% dsrs.each do |dsr| %>
+          <% project_hash = {} %>
+          <% project_hash[""] = "N-A" %>
+          <% user_hash = {} %>
+          <% user_hash[""] = "N-A" %>
+          <% daily_status_report = dsr.daily_status_reports.first %>
+          <tr class="dsr-point"
+              id="dsr-<%= dsr.id %>"
+              data-action="click->dsr#<%= current_user.id == dsr.user_id ? "fetchSendDsr" : "fetchReceivedDsr" %>"
+              data-dsr-id-param="<%= dsr.id %>">
+            <% project_id = daily_status_report.project_id.to_s %>
+            <% unless project_hash[project_id].present? %>
+              <% project_hash[project_id] = daily_status_report.project&.name || 'N-A' %>
+            <% end %>
+            <% if current_user.id != dsr.user_id %>
+              <td width="20%">
+                <% user_id = dsr.user_id.to_s %>
+                <% unless user_hash[user_id].present? %>
+                  <% user_hash[user_id] = dsr.user.full_name %>
+                <% end %>
+                <b><%= user_hash[user_id] %></b>
+              </td>
+              <td width="50%">
+                <b><%= project_hash[project_id] || "N-A" %></b><br>
+                <%= daily_status_report&.description.to_s.truncate_bytes(50) %>...
+              </td>
+            <% else %>
+              <td width="70%">
+                <b><%= project_hash[project_id] || "N-A" %></b><br>
+                <%= daily_status_report&.description.to_s.truncate_bytes(50) %>...
+              </td>
+            <% end %>
+            <td width="30%"><%= dsr.date.strftime('%d-%m-%Y') || "-" %></td>
+          </tr>
+        <% end if dsrs.present? %>
+        <% unless dsrs.present? %>
+        <tr>
+          <td colspan="3" class="no_record">
+            <span><b>No records found</b></span>
+          </td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <span class="paginate-content">
+        <%= raw pagy_nav(pagy) if pagy.pages > 1 %>
+      </span>
+    </div>
+  </div>
+</div>
+

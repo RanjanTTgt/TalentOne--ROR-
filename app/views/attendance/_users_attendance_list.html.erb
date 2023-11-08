@@ -1,0 +1,16 @@
+<table class="table align-items-center table-flush">
+  <thead class="thead-light">
+  <th scope="col" class="sort" data-sort="budget">User</th>
+  <th scope="col">Time In</th>
+  <th scope="col">Time Out</th>
+  <th scope="col">Total Working Time</th>
+  <th scope="col">Status</th>
+  </thead>
+  <tbody class="list">
+
+  <%= turbo_stream_from "user-attendance-record" %>
+  <% attendance_reports.each do |attendance| %>
+      <%= render partial: "attendance/attendance_record", locals: { attendance: attendance } %>
+  <% end if attendance_reports.present? %>
+  </tbody>
+</table>
